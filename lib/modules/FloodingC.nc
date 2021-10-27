@@ -11,5 +11,6 @@ Implementation {
     components new simpleSend(AM_PACK);
     FloodingP.simpleSend-> SimpleSendC;
 
-    components new
+    components new HashmapC(uint32_t, 20);
+    FloodingP.PreviousPackets -> HashmapC;
 }
