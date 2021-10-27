@@ -22,6 +22,9 @@ module Node{
    uses interface SimpleSend as Sender;
 
    uses interface CommandHandler;
+
+   uses interface Flooding as Flooding; //project 1 integration part 1
+   uses interface NeighborDiscovery as NeighborDiscovery; //Project 1 implementation part 2
 }
 
 implementation{
@@ -34,6 +37,9 @@ implementation{
       call AMControl.start();
 
       dbg(GENERAL_CHANNEL, "Booted\n");
+
+      //proj 1 part 2 implementation
+      call Neighbor Discovery.start();
    }
 
    event void AMControl.startDone(error_t err){
@@ -53,6 +59,10 @@ implementation{
          pack* myMsg=(pack*) payload;
          dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
          return msg;
+      } else if (myMsg->dest == 0) {//proj 1 integration of part 2 of the project
+      		call NeighborDiscovery.discover(myMsg);
+      } else {
+         callFlooding.Flood(myMsg);//proj1 inegration of part 1
       }
       dbg(GENERAL_CHANNEL, "Unknown Packet Type %d\n", len);
       return msg;
@@ -63,9 +73,12 @@ implementation{
       dbg(GENERAL_CHANNEL, "PING EVENT \n");
       makePack(&sendPackage, TOS_NODE_ID, destination, 0, 0, 0, payload, PACKET_MAX_PAYLOAD_SIZE);
       call Sender.send(sendPackage, destination);
+      call Flooding.ping(destination,payload);//proj1 integration of part 1
    }
 
-   event void CommandHandler.printNeighbors(){}
+   event void CommandHandler.printNeighbors(){
+      call NeighborDiscovery.printNeighbors(); //proj 1 integration of part 2
+   }
 
    event void CommandHandler.printRouteTable(){}
 
