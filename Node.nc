@@ -39,7 +39,7 @@ implementation{
       dbg(GENERAL_CHANNEL, "Booted\n");
 
       //proj 1 part 2 implementation
-      call Neighbor Discovery.start();
+      call NeighborDiscovery.start();
    }
 
    event void AMControl.startDone(error_t err){
