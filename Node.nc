@@ -54,15 +54,14 @@ implementation{
    event void AMControl.stopDone(error_t err){}
 
    event message_t* Receive.receive(message_t* msg, void* payload, uint8_t len){
-      dbg(GENERAL_CHANNEL, "Packet Received\n");
+      pack* myMsg = (pack*)payload;//type casting
       if(len==sizeof(pack)){
-         pack* myMsg=(pack*) payload;
          dbg(GENERAL_CHANNEL, "Package Payload: %s\n", myMsg->payload);
          return msg;
       } else if (myMsg->dest == 0) {                                             //proj 1 integration of part 2 of the project
       		call NeighborDiscovery.discover(myMsg);
       } else {
-         callFlooding.Flood(myMsg);//proj1 inegration of part 1
+         call Flooding.Flood(myMsg);//proj1 inegration of part 1
       }
       dbg(GENERAL_CHANNEL, "Unknown Packet Type %d\n", len);
       return msg;
