@@ -38,7 +38,7 @@ implementation {
     }
 
     command void Flooding.Flood(pack* letter){                                          // Letter is the "packet"
-        if(containsval(letter -> seq, letter -> src)){
+        if(PreviousPackets.containsval(letter -> seq, letter -> src)){
             dbg(FLOODING_CHANNEL, "Duplicate packet. Will not forward...\n");           //Debugging Message Print
         } else if(letter -> TTL == 0) {                                                 //When the packet's time to live has expired we don't forward
             dbg(FLOODING_CHANNEL, "Packet has expired. Will not forward to prevent infinite loop...\n");

@@ -10,7 +10,7 @@ module NeighborDiscoveryP {
     uses interface Random as Random;
     uses interface Timer<TMilli> as Timer;
     uses interface Hashmap<uint32_t> as NeighborTable;
-    uses interface SimpleSend as Sender;
+    uses interface SimpleSend as Sender;//simpleSend
 }
 
 implementation {

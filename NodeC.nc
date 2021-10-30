@@ -31,11 +31,10 @@ implementation {
     components CommandHandlerC;
     Node.CommandHandler -> CommandHandlerC;
 
-//Project 1 implementations
-    //part 1 of the project 1
+    //Project 1 implementations
     components FloodingC;
     Node.Flooding -> FloodingC;
-    //Part 2 of the project 1
+
     components NeighborDiscoveryC;
     Node.NeighborDiscovery -> NeighborDiscoveryC;
 }
